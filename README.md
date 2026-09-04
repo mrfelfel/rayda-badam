@@ -18,7 +18,7 @@ This software is released under the **Surati Network Open Source License (SNOSL)
 
 لایسنس کامل: [LICENSE](LICENSE) (English) | [LICENSE-FA.txt](LICENSE-FA.txt) (فارسی)
 
-برای دریافت لایسنس تجاری: network@surati.ir
+برای دریافت لایسنس تجاری: [GitHub Issues]
 
 ---
 
