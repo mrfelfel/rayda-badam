@@ -93,7 +93,7 @@ export default function ReportsPage() {
       </Paper>
 
       {/* Quick Stats */}
-      <Grid container spacing={2} mb={3}>
+      <Grid container spacing={2} sx={{mb:3}}>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل واریزی</Typography>
