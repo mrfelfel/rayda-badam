@@ -15,19 +15,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Try external API first (production)
-    const API_URL = process.env.LOGIN_API_URL || 'https://users.rayda.ir';
-    try {
-      const res = await fetch(`${API_URL}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await res.json();
-      if (data.status) {
-        return NextResponse.json({ status: true, token: data.token });
+    // External API (if configured)
+    const API_URL = process.env.LOGIN_API_URL;
+    if (API_URL) {
+      try {
+        const res = await fetch(`${API_URL}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+        const data = await res.json();
+        if (data.status) {
+          return NextResponse.json({ status: true, token: data.token });
+        }
+      } catch {
+        // External API unavailable, fall through to local auth
       }
-    } catch {
-      // External API unavailable, fall through to local auth
     }
 
     // Local dev auth (seed data)
