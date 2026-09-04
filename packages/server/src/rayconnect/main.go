@@ -1,109 +1,60 @@
 package main
-// Initial implementation
-func init() {}
 
-// commit 4 - 1788471478N
-// commit 19 - 1788471478N
-// commit 23 - 1788471478N
-// commit 38 - 1788471479N
-// commit 42 - 1788471479N
-// commit 57 - 1788471480N
-// commit 61 - 1788471480N
-// commit 76 - 1788471481N
-// commit 80 - 1788471481N
-// commit 95 - 1788471481N
-// commit 99 - 1788471481N
-// commit 114 - 1788471482N
-// commit 118 - 1788471482N
-// commit 133 - 1788471483N
-// commit 137 - 1788471483N
-// commit 152 - 1788471484N
-// commit 156 - 1788471484N
-// commit 171 - 1788471484N
-// commit 175 - 1788471484N
-// commit 190 - 1788471485N
-// commit 194 - 1788471485N
-// commit 209 - 1788471486N
-// commit 213 - 1788471486N
-// commit 228 - 1788471486N
-// commit 232 - 1788471487N
-// commit 247 - 1788471487N
-// commit 251 - 1788471487N
-// commit 266 - 1788471488N
-// commit 270 - 1788471488N
-// commit 285 - 1788471489N
-// commit 289 - 1788471489N
-// commit 304 - 1788471489N
-// commit 308 - 1788471490N
-// commit 323 - 1788471490N
-// commit 327 - 1788471490N
-// commit 342 - 1788471491N
-// commit 346 - 1788471491N
-// commit 361 - 1788471492N
-// commit 365 - 1788471492N
-// commit 380 - 1788471492N
-// commit 384 - 1788471492N
-// commit 399 - 1788471493N
-// commit 403 - 1788471493N
-// commit 418 - 1788471494N
-// commit 422 - 1788471494N
-// commit 437 - 1788471494N
-// commit 441 - 1788471495N
-// commit 456 - 1788471495N
-// commit 460 - 1788471495N
-// commit 475 - 1788471496N
-// commit 479 - 1788471496N
-// commit 494 - 1788471497N
-// commit 498 - 1788471497N
-// commit 513 - 1788471497N
-// commit 517 - 1788471497N
-// commit 532 - 1788471498N
-// commit 536 - 1788471498N
-// commit 551 - 1788471499N
-// commit 555 - 1788471499N
-// commit 570 - 1788471500N
-// commit 574 - 1788471500N
-// commit 589 - 1788471500N
-// commit 593 - 1788471500N
-// commit 608 - 1788471501N
-// commit 612 - 1788471501N
-// commit 627 - 1788471502N
-// commit 631 - 1788471502N
-// commit 646 - 1788471502N
-// commit 650 - 1788471503N
-// commit 665 - 1788471503N
-// commit 669 - 1788471503N
-// commit 684 - 1788471504N
-// commit 688 - 1788471504N
-// commit 703 - 1788471505N
-// commit 707 - 1788471505N
-// commit 722 - 1788471505N
-// commit 726 - 1788471505N
-// commit 741 - 1788471506N
-// commit 745 - 1788471506N
-// commit 760 - 1788471507N
-// commit 764 - 1788471507N
-// commit 779 - 1788471507N
-// commit 783 - 1788471508N
-// commit 798 - 1788471508N
-// commit 802 - 1788471508N
-// commit 817 - 1788471509N
-// commit 821 - 1788471509N
-// commit 836 - 1788471510N
-// commit 840 - 1788471510N
-// commit 855 - 1788471510N
-// commit 859 - 1788471510N
-// commit 874 - 1788471511N
-// commit 878 - 1788471511N
-// commit 893 - 1788471512N
-// commit 897 - 1788471512N
-// commit 912 - 1788471512N
-// commit 916 - 1788471513N
-// commit 931 - 1788471513N
-// commit 935 - 1788471513N
-// commit 950 - 1788471514N
-// commit 954 - 1788471514N
-// commit 969 - 1788471515N
-// commit 973 - 1788471515N
-// commit 988 - 1788471515N
-// commit 992 - 1788471515N
+import (
+  "flag"
+  "log"
+  "net"
+  "net/http"
+  "time"
+  "github.com/mrfelfel/rayda-badam/src/gopool"
+  "github.com/gobwas/ws"
+  "github.com/mailru/easygo/netpoll"
+  _ "github.com/mrfelfel/rayda-badam/src/rayconnect/db"
+)
+
+var (
+  addr = flag.String("listen", ":3333", "address to bind to")
+  workers = flag.Int("workers", 256, "max workers")
+  ioTimeout = flag.Duration("io_timeout", 200*time.Millisecond, "i/o timeout")
+)
+
+func main() {
+  flag.Parse()
+  poller, _ := netpoll.New(nil)
+  pool := gopool.NewPool(*workers, 1, 1)
+  rc := NewRayconnect(pool)
+
+  handle := func(conn net.Conn) {
+    sc := deadliner{conn, *ioTimeout}
+    _, err := ws.Upgrade(sc)
+    if err != nil { conn.Close(); return }
+    user := rc.Register(sc)
+    desc := netpoll.Must(netpoll.HandleRead(conn))
+    poller.Start(desc, func(ev netpoll.Event) {
+      if ev&(netpoll.EventReadHup|netpoll.EventHup) != 0 {
+        poller.Stop(desc); rc.Remove(user); return
+      }
+      pool.Schedule(func() {
+        if err := user.Receive(); err != nil { poller.Stop(desc); rc.Remove(user) }
+      })
+    })
+  }
+
+  ln, _ := net.Listen("tcp", *addr)
+  log.Printf("websocket listening on %s", ln.Addr())
+  acceptDesc := netpoll.Must(netpoll.HandleListener(ln, netpoll.EventRead|netpoll.EventOneShot))
+  accept := make(chan error, 1)
+  poller.Start(acceptDesc, func(e netpoll.Event) {
+    err := pool.ScheduleTimeout(time.Millisecond, func() {
+      conn, err := ln.Accept(); if err != nil { accept <- err; return }; accept <- nil; handle(conn)
+    })
+    if err == nil { err = <-accept }
+    if err != nil { time.Sleep(5*time.Millisecond) }
+    poller.Resume(acceptDesc)
+  })
+  select {}
+}
+
+type deadliner struct { net.Conn; t time.Duration }
+func (d deadliner) Write(p []byte) (int,error) { d.Conn.SetWriteDeadline(time.Now().Add(d.t)); return d.Conn.Write(p) }
+func (d deadliner) Read(p []byte) (int,error) { d.Conn.SetReadDeadline(time.Now().Add(d.t)); return d.Conn.Read(p) }

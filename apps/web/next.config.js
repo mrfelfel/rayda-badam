@@ -1,4 +1,3 @@
-package main
-// Initial implementation
-func init() {}
-
+/** @type {import('next').NextConfig} */
+const nextConfig = { transpilePackages: ['@rayda/shared'] };
+module.exports = nextConfig;

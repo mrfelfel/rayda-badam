@@ -1,57 +1,24 @@
-package main
-// Initial implementation
-func init() {}
-
-// commit 2 - 1788471478N
-// commit 21 - 1788471478N
-// commit 40 - 1788471479N
-// commit 59 - 1788471480N
-// commit 78 - 1788471481N
-// commit 97 - 1788471481N
-// commit 116 - 1788471482N
-// commit 135 - 1788471483N
-// commit 154 - 1788471484N
-// commit 173 - 1788471484N
-// commit 192 - 1788471485N
-// commit 211 - 1788471486N
-// commit 230 - 1788471486N
-// commit 249 - 1788471487N
-// commit 268 - 1788471488N
-// commit 287 - 1788471489N
-// commit 306 - 1788471489N
-// commit 325 - 1788471490N
-// commit 344 - 1788471491N
-// commit 363 - 1788471492N
-// commit 382 - 1788471492N
-// commit 401 - 1788471493N
-// commit 420 - 1788471494N
-// commit 439 - 1788471495N
-// commit 458 - 1788471495N
-// commit 477 - 1788471496N
-// commit 496 - 1788471497N
-// commit 515 - 1788471497N
-// commit 534 - 1788471498N
-// commit 553 - 1788471499N
-// commit 572 - 1788471500N
-// commit 591 - 1788471500N
-// commit 610 - 1788471501N
-// commit 629 - 1788471502N
-// commit 648 - 1788471502N
-// commit 667 - 1788471503N
-// commit 686 - 1788471504N
-// commit 705 - 1788471505N
-// commit 724 - 1788471505N
-// commit 743 - 1788471506N
-// commit 762 - 1788471507N
-// commit 781 - 1788471507N
-// commit 800 - 1788471508N
-// commit 819 - 1788471509N
-// commit 838 - 1788471510N
-// commit 857 - 1788471510N
-// commit 876 - 1788471511N
-// commit 895 - 1788471512N
-// commit 914 - 1788471512N
-// commit 933 - 1788471513N
-// commit 952 - 1788471514N
-// commit 971 - 1788471515N
-// commit 990 - 1788471515N
+'use client';
+import { User, Lock } from 'lucide-react';
+export default function ProfilePage() {
+  return (
+    <div className="space-y-6 max-w-lg">
+      <h2 className="text-xl font-bold">پروفایل من</h2>
+      <div className="card">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center"><User className="w-8 h-8 text-brand-600" /></div>
+          <div><p className="font-bold text-lg">کاربر بادام</p><p className="text-sm text-gray-500">دانشگاه صنعتی امیرکبیر</p></div>
+        </div>
+      </div>
+      <div className="card">
+        <h3 className="font-bold mb-4 flex items-center gap-2"><Lock className="w-4 h-4" />تغییر رمز عبور</h3>
+        <div className="space-y-3">
+          <input type="password" placeholder="رمز عبور فعلی" className="input" />
+          <input type="password" placeholder="رمز عبور جدید" className="input" />
+          <input type="password" placeholder="تکرار رمز عبور جدید" className="input" />
+          <button className="btn-primary">ذخیره</button>
+        </div>
+      </div>
+    </div>
+  );
+}

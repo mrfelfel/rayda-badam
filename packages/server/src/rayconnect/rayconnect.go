@@ -1,109 +1,97 @@
 package main
-// Initial implementation
-func init() {}
 
-// commit 9 - 1788471478N
-// commit 14 - 1788471478N
-// commit 28 - 1788471479N
-// commit 33 - 1788471479N
-// commit 47 - 1788471479N
-// commit 52 - 1788471480N
-// commit 66 - 1788471480N
-// commit 71 - 1788471480N
-// commit 85 - 1788471481N
-// commit 90 - 1788471481N
-// commit 104 - 1788471482N
-// commit 109 - 1788471482N
-// commit 123 - 1788471482N
-// commit 128 - 1788471483N
-// commit 142 - 1788471483N
-// commit 147 - 1788471483N
-// commit 161 - 1788471484N
-// commit 166 - 1788471484N
-// commit 180 - 1788471485N
-// commit 185 - 1788471485N
-// commit 199 - 1788471485N
-// commit 204 - 1788471486N
-// commit 218 - 1788471486N
-// commit 223 - 1788471486N
-// commit 237 - 1788471487N
-// commit 242 - 1788471487N
-// commit 256 - 1788471488N
-// commit 261 - 1788471488N
-// commit 275 - 1788471488N
-// commit 280 - 1788471489N
-// commit 294 - 1788471489N
-// commit 299 - 1788471489N
-// commit 313 - 1788471490N
-// commit 318 - 1788471490N
-// commit 332 - 1788471490N
-// commit 337 - 1788471491N
-// commit 351 - 1788471491N
-// commit 356 - 1788471491N
-// commit 370 - 1788471492N
-// commit 375 - 1788471492N
-// commit 389 - 1788471493N
-// commit 394 - 1788471493N
-// commit 408 - 1788471493N
-// commit 413 - 1788471494N
-// commit 427 - 1788471494N
-// commit 432 - 1788471494N
-// commit 446 - 1788471495N
-// commit 451 - 1788471495N
-// commit 465 - 1788471495N
-// commit 470 - 1788471496N
-// commit 484 - 1788471496N
-// commit 489 - 1788471496N
-// commit 503 - 1788471497N
-// commit 508 - 1788471497N
-// commit 522 - 1788471498N
-// commit 527 - 1788471498N
-// commit 541 - 1788471498N
-// commit 546 - 1788471499N
-// commit 560 - 1788471499N
-// commit 565 - 1788471499N
-// commit 579 - 1788471500N
-// commit 584 - 1788471500N
-// commit 598 - 1788471501N
-// commit 603 - 1788471501N
-// commit 617 - 1788471501N
-// commit 622 - 1788471502N
-// commit 636 - 1788471502N
-// commit 641 - 1788471502N
-// commit 655 - 1788471503N
-// commit 660 - 1788471503N
-// commit 674 - 1788471503N
-// commit 679 - 1788471504N
-// commit 693 - 1788471504N
-// commit 698 - 1788471504N
-// commit 712 - 1788471505N
-// commit 717 - 1788471505N
-// commit 731 - 1788471506N
-// commit 736 - 1788471506N
-// commit 750 - 1788471506N
-// commit 755 - 1788471506N
-// commit 769 - 1788471507N
-// commit 774 - 1788471507N
-// commit 788 - 1788471508N
-// commit 793 - 1788471508N
-// commit 807 - 1788471508N
-// commit 812 - 1788471509N
-// commit 826 - 1788471509N
-// commit 831 - 1788471509N
-// commit 845 - 1788471510N
-// commit 850 - 1788471510N
-// commit 864 - 1788471511N
-// commit 869 - 1788471511N
-// commit 883 - 1788471511N
-// commit 888 - 1788471511N
-// commit 902 - 1788471512N
-// commit 907 - 1788471512N
-// commit 921 - 1788471513N
-// commit 926 - 1788471513N
-// commit 940 - 1788471513N
-// commit 945 - 1788471514N
-// commit 959 - 1788471514N
-// commit 964 - 1788471514N
-// commit 978 - 1788471515N
-// commit 983 - 1788471515N
-// commit 997 - 1788471516N
+import (
+  "bytes"
+  "encoding/json"
+  "math/rand"
+  "net"
+  "sort"
+  "strconv"
+  "time"
+  "github.com/mrfelfel/rayda-badam/src/gopool"
+  "github.com/gobwas/ws"
+  "github.com/gobwas/ws/wsutil"
+)
+
+func (u *User) Receive() error {
+  req, err := u.readRequest()
+  if err != nil { u.conn.Close(); return err }
+  if req == nil { return nil }
+  switch req.Method {
+  case "handshake":
+    return u.writeResultTo(req, Object{"app": Object{"status": "ok"}})
+  case "auth":
+    return u.writeResultTo(req, Object{"user": Object{"authed": true}})
+  case "send":
+    req.Params["author"] = u.name; req.Params["time"] = time.Now().UnixMilli()
+    u.rayconnect.SendTo(req.Params["name"].(string), req.Params)
+    return u.writeNotice("approve", Object{"message": "sended"})
+  default:
+    return u.writeErrorTo(req, Object{"error": "not implemented"})
+  }
+}
+
+func (u *User) readRequest() (*Request, error) {
+  u.io.Lock(); defer u.io.Unlock()
+  h, r, err := wsutil.NextReader(u.conn, ws.StateServerSide)
+  if err != nil { return nil, err }
+  if h.OpCode.IsControl() { return nil, wsutil.ControlFrameHandler(u.conn, ws.StateServerSide)(h, r) }
+  req := &Request{}; json.NewDecoder(r).Decode(req); return req, nil
+}
+
+func (u *User) writeErrorTo(req *Request, err Object) error { return u.write(Error{ID: req.ID, Error: err}) }
+func (u *User) writeResultTo(req *Request, res Object) error { return u.write(Response{ID: req.ID, Result: res}) }
+func (u *User) writeNotice(m string, p Object) error { return u.write(Request{Method: m, Params: p}) }
+func (u *User) write(x interface{}) error {
+  w := wsutil.NewWriter(u.conn, ws.StateServerSide, ws.OpText)
+  u.io.Lock(); defer u.io.Unlock()
+  json.NewEncoder(w).Encode(x); return w.Flush()
+}
+func (u *User) writeRaw(p []byte) error { u.io.Lock(); defer u.io.Unlock(); _, e := u.conn.Write(p); return e }
+
+func NewRayconnect(pool *gopool.Pool) *Rayconnect {
+  rc := &Rayconnect{pool: pool, ns: make(map[string]*User), out: make(chan []byte, 256)}
+  go rc.writer(); return rc
+}
+
+func (c *Rayconnect) Register(conn net.Conn) *User {
+  u := &User{rayconnect: c, conn: conn}
+  c.mu.Lock()
+  u.id = c.seq; u.name = iranians[rand.Intn(len(iranians))]; c.us = append(c.us, u); c.ns[u.name] = u; c.seq++
+  c.mu.Unlock()
+  u.writeNotice("hello", Object{"name": u.name})
+  c.Broadcast("greet", Object{"name": u.name, "time": time.Now().UnixMilli()})
+  return u
+}
+
+func (c *Rayconnect) Remove(u *User) {
+  c.mu.Lock(); delete(c.ns, u.name)
+  i := sort.Search(len(c.us), func(i int) bool { return c.us[i].id >= u.id })
+  c.us = append(c.us[:i], c.us[i+1:]...); c.mu.Unlock()
+  c.Broadcast("goodbye", Object{"name": u.name})
+}
+
+func (c *Rayconnect) SendTo(name string, params Object) bool {
+  var buf bytes.Buffer; w := wsutil.NewWriter(&buf, ws.StateServerSide, ws.OpText)
+  json.NewEncoder(w).Encode(Request{Method: "pv_send", Params: params}); w.Flush()
+  c.mu.Lock(); defer c.mu.Unlock()
+  if u, has := c.ns[name]; has { c.pool.Schedule(func() { u.writeRaw(buf.Bytes()) }); return true }
+  return false
+}
+
+func (c *Rayconnect) Broadcast(m string, p Object) {
+  var buf bytes.Buffer; w := wsutil.NewWriter(&buf, ws.StateServerSide, ws.OpText)
+  json.NewEncoder(w).Encode(Request{Method: m, Params: p}); w.Flush()
+  c.out <- buf.Bytes()
+}
+
+func (c *Rayconnect) writer() {
+  for b := range c.out {
+    c.mu.RLock(); us := c.us; c.mu.RUnlock()
+    for _, u := range us { u := u; c.pool.Schedule(func() { u.writeRaw(b) }) }
+  }
+}
+
+func (c *Rayconnect) randName() string {
+  for { n := iranians[rand.Intn(len(iranians))]; if _, has := c.ns[n]; !has { return n } }
+}
