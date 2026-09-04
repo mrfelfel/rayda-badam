@@ -26,7 +26,7 @@ This software is released under the **Surati Network Open Source License (SNOSL)
 
 ```bash
 git clone https://github.com/mrfelfel/rayda-badam.git
-cd rayda-badam
+cd surati-food
 pnpm install
 cd apps/web && pnpm dev
 ```
