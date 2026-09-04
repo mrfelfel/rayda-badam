@@ -65,7 +65,7 @@ export default function UsersPage() {
       <Box sx={{ p:2, mb:3, bgcolor:'white', borderRadius:3, boxShadow:'0 1px 3px rgba(0,0,0,0.05)' }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} md={4}>
-            <TextField fullWidth size="small" placeholder="جستجو بر اساس نام، خانواده یا کد ملی..." value={search} onChange={e=>setSearch(e.target.value)} InputProps={{startAdornment:<Search sx={{mr:1,color:'grey.400'}} fontSize="small"/>}}/>
+            <TextField fullWidth size="small" placeholder="جستجو بر اساس نام، خانواده یا کد ملی..." value={search} onChange={e=>setSearch(e.target.value)} slotProps={{input:{startAdornment:<Search sx={{mr:1,color:'grey.400'}} fontSize="small"/>}}}/>
           </Grid>
           <Grid item xs={6} md={3}>
             <FormControl fullWidth size="small"><InputLabel>گروه کاربری</InputLabel>

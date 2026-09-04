@@ -25,7 +25,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
           {MENU.map(item => (
             <ListItem key={item.href} component={'a' as any} href={item.href} selected={pathname === item.href} sx={{ borderRadius: 2, mx: 1, mb: 0.5, cursor:'pointer', textDecoration:'none', '&.Mui-selected': { bgcolor: 'primary.50', color: 'primary.main' } }}>
               <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: 14, fontWeight: pathname === item.href ? 700 : 400 }} />
+              <ListItemText primary={item.label} slotProps={{ primary: { sx: { fontSize: 14, fontWeight: pathname === item.href ? 700 : 400 } } }} />
             </ListItem>
           ))}
         </List>
