@@ -1,146 +1,130 @@
 'use client';
-import { useState } from 'react';
-import { Search, MapPin, ChevronDown, ShoppingCart, Zap, Clock, Star, TrendingUp, Wallet } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { MapPin, ChevronDown, Zap, Clock, Star, Wallet, ChevronLeft, Calendar, Shield, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 
-const CATEGORIES = [
-  { icon:'🍱', label:'غذای ایرانی', color:'bg-orange-50' },
-  { icon:'🥘', label:'خورشت', color:'bg-green-50' },
-  { icon:'🥩', label:'کباب', color:'bg-red-50' },
-  { icon:'🍕', label:'فست‌فود', color:'bg-yellow-50' },
-  { icon:'🥗', label:'سالاد', color:'bg-emerald-50' },
-  { icon:'🍰', label:'شیرینی', color:'bg-pink-50' },
-  { icon:'☕', label:'نوشیدنی', color:'bg-amber-50' },
-  { icon:'🍞', label:'نانوایی', color:'bg-orange-50' },
-];
+const DAYS = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
 
-const POPULAR_FOODS = [
-  { id:1, name:'چلو کباب سلطانی', restaurant:'سلف مرکزی', price:45000, discount:10, time:'25 دقیقه', rating:4.5, img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop' },
-  { id:2, name:'زرشک پلو با مرغ', restaurant:'سلف مرکزی', price:38000, discount:0, time:'20 دقیقه', rating:4.2, img:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&h=300&fit=crop' },
-  { id:3, name:'قورمه سبزی با برنج', restaurant:'سلف خوابگاه', price:42000, discount:5, time:'30 دقیقه', rating:4.0, img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=300&fit=crop' },
-  { id:4, name:'باقلو پلو با گوشت', restaurant:'سلف فنی', price:48000, discount:0, time:'35 دقیقه', rating:4.7, img:'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop' },
+// Today's meals (what's available RIGHT NOW for today)
+const TODAY_FOODS = [
+  { name:'چلو کباب', meal:'ناهار', price:45000, place:'سلف مرکزی', remain:3 },
+  { name:'زرشک پلو با مرغ', meal:'شام', price:38000, place:'سلف مرکزی', remain:8 },
+  { name:'قورمه سبزی', meal:'ناهار', price:42000, place:'خوابگاه ۱', remain:1 },
 ];
 
 export default function HomePage() {
   const { uid } = useAuth();
-  const [search, setSearch] = useState('');
+  const now = new Date();
+  const hour = now.getHours();
+  const currentMeal = hour >= 11 && hour <= 14 ? 'ناهار' : hour >= 17 && hour <= 22 ? 'شام' : hour >= 2 && hour <= 5 ? 'سحری' : null;
 
   return (
     <div className="page-container">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-xs text-gray-400 flex items-center gap-1"><MapPin className="w-3 h-3" /> محل تحویل</p>
-          <button className="flex items-center gap-1 font-bold text-sm">
-            دانشکده امیرکبیر <ChevronDown className="w-4 h-4 text-pink-500" />
-          </button>
-        </div>
-        <Link href="/wallet" className="relative">
-          <div className="w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center">
-            <ShoppingCart className="w-5 h-5 text-pink-600" />
+      {/* Location */}
+      <div className="flex items-center gap-2 text-gray-500">
+        <MapPin className="w-4 h-4 text-pink-500" />
+        <span className="text-sm">دانشکده پسران امیرکبیر</span>
+        <ChevronDown className="w-4 h-4" />
+      </div>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/foods" className="card bg-gradient-to-br from-pink-500 to-pink-400 text-white flex items-center gap-3 active:scale-95 transition-transform">
+          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+            <Calendar className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="font-bold">رزرو غذا</p>
+            <p className="text-xs text-white/80">برنامه هفتگی</p>
+          </div>
+        </Link>
+        <Link href="/wallet" className="card bg-gradient-to-br from-amber-500 to-amber-400 text-white flex items-center gap-3 active:scale-95 transition-transform">
+          <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+            <Wallet className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="font-bold">کیف پول</p>
+            <p className="text-xs text-white/80">۵۰۰,۰۰۰ تومان</p>
           </div>
         </Link>
       </div>
 
-      {/* Search */}
-      <div className="search-bar">
-        <Search className="w-5 h-5" />
-        <input type="text" placeholder="جستجو در اتوماسیون تغذیه صورتی!" className="bg-transparent flex-1 outline-none text-gray-700" value={search} onChange={e => setSearch(e.target.value)} />
-      </div>
-
-      {/* Categories */}
-      <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
-        {CATEGORIES.map((cat, i) => (
-          <div key={i} className="category-chip">
-            <span className="text-3xl">{cat.icon}</span>
-            <span className="text-[11px] font-medium text-gray-600 whitespace-nowrap">{cat.label}</span>
+      {/* Current Meal Status */}
+      {currentMeal && (
+        <div className="card border-pink-200 bg-pink-50/50">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs text-pink-600 font-medium">وعده فعلی</p>
+              <p className="font-bold text-lg">{currentMeal}</p>
+            </div>
+            <span className="badge-pink">{hour}:{String(now.getMinutes()).padStart(2,'0')}</span>
           </div>
-        ))}
-      </div>
-
-      {/* Wallet Banner */}
-      <Link href="/wallet" className="card bg-gradient-to-l from-pink-500 to-pink-400 text-white flex items-center justify-between">
-        <div>
-          <p className="text-sm opacity-90">کیف پول صورتی</p>
-          <p className="text-2xl font-bold mt-1">۵۰۰,۰۰۰ <span className="text-sm font-normal">تومان</span></p>
         </div>
-        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-          <Wallet className="w-6 h-6" />
-        </div>
-      </Link>
+      )}
 
-      {/* Flash Sale / Food Party */}
+      {/* Food Party - Today's extra foods */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Zap className="w-5 h-5 text-amber-500" />
-            <h2 className="section-title">فودپارتی</h2>
+            <h2 className="section-title">غذاهای اضافه امروز</h2>
           </div>
-          <span className="badge-amber flex items-center gap-1"><Clock className="w-3 h-3" /> تا پایان ۰۲:۳۵</span>
+          <span className="badge-amber">فقط امروز</span>
         </div>
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
-          {POPULAR_FOODS.filter(f => f.discount > 0).map(food => (
-            <Link key={food.id} href="/foods" className="food-card min-w-[260px] flex-shrink-0">
-              <div className="relative h-36 bg-gray-100">
-                <img src={food.img} alt={food.name} className="w-full h-full object-cover" />
-                <span className="absolute top-3 right-3 badge-red">{food.discount}%</span>
+        <p className="text-xs text-gray-400 -mt-2">غذاهایی که امروز قابل رزرو هستند ولی هنوز جا دارند</p>
+
+        {TODAY_FOODS.filter(f => !currentMeal || f.meal === currentMeal).map((food, i) => (
+          <Link key={i} href="/foods" className="card flex items-center justify-between active:bg-gray-50">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-pink-50 rounded-2xl flex items-center justify-center text-xl">
+                {food.meal === 'ناهار' ? '🍱' : food.meal === 'شام' ? '🌙' : '☀️'}
               </div>
-              <div className="p-3">
+              <div>
                 <h3 className="font-bold text-sm">{food.name}</h3>
-                <p className="text-xs text-gray-400 mt-1">{food.restaurant}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <div>
-                    {food.discount > 0 && <span className="text-xs text-gray-400 line-through ml-1">{food.price.toLocaleString('fa-IR')}</span>}
-                    <span className="font-bold text-pink-600">{((food.price * (100 - food.discount)) / 100).toLocaleString('fa-IR')} تومان</span>
-                  </div>
-                  <span className="badge-green">{food.time}</span>
-                </div>
+                <p className="text-xs text-gray-400">{food.place} — {food.meal}</p>
               </div>
-            </Link>
-          ))}
+            </div>
+            <div className="text-left">
+              <p className="font-bold text-pink-600 text-sm">{food.price.toLocaleString('fa-IR')} تومان</p>
+              <p className="text-[10px] text-emerald-500">{food.remain} عدد باقیمانده</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* This week summary */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="section-title">خلاصه این هفته</h2>
+          <Link href="/foods" className="text-pink-600 text-sm font-medium flex items-center gap-1">مشاهده <ArrowLeft className="w-4 h-4" /></Link>
+        </div>
+        <div className="grid grid-cols-7 gap-1">
+          {DAYS.map((d, i) => {
+            const isToday = (now.getDay() === 0 ? 6 : now.getDay() - 1) === i;
+            const hasReservation = i < 5;
+            return (
+              <div key={i} className={`text-center py-2 rounded-xl text-xs ${isToday ? 'bg-pink-500 text-white font-bold' : hasReservation ? 'bg-pink-50 text-pink-700' : 'bg-gray-50 text-gray-400'}`}>
+                <p className="text-[9px]">{d.slice(0,3)}</p>
+                <p className="font-bold mt-0.5">{i + 7}</p>
+                {hasReservation && !isToday && <div className="w-1 h-1 bg-pink-400 rounded-full mx-auto mt-1" />}
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Popular foods */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="section-title">محبوب‌ترین‌ها</h2>
-          <button className="text-pink-600 text-sm font-medium">مشاهده همه</button>
+      {/* Admin Panel Link */}
+      <Link href="/panel/food-manage" className="card flex items-center gap-3 border-amber-200 bg-amber-50/50 active:bg-amber-50">
+        <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+          <Shield className="w-5 h-5 text-amber-600" />
         </div>
-        <div className="space-y-3">
-          {POPULAR_FOODS.map(food => (
-            <Link key={food.id} href="/foods" className="food-card flex">
-              <div className="w-28 h-28 bg-gray-100 flex-shrink-0">
-                <img src={food.img} alt={food.name} className="w-full h-full object-cover" />
-              </div>
-              <div className="flex-1 p-3 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-bold text-sm">{food.name}</h3>
-                  <p className="text-xs text-gray-400">{food.restaurant}</p>
-                  <div className="flex items-center gap-1 mt-1">
-                    <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                    <span className="text-xs text-gray-500">{food.rating}</span>
-                    <span className="text-xs text-gray-300">•</span>
-                    <span className="text-xs text-gray-400">{food.time}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  {food.discount > 0 ? (
-                    <div>
-                      <span className="text-xs text-gray-400 line-through">{food.price.toLocaleString('fa-IR')}</span>
-                      <span className="font-bold text-pink-600 mr-2">{((food.price * (100 - food.discount)) / 100).toLocaleString('fa-IR')} تومان</span>
-                      <span className="badge-red mr-1">{food.discount}%</span>
-                    </div>
-                  ) : (
-                    <span className="font-bold text-pink-600">{food.price.toLocaleString('fa-IR')} تومان</span>
-                  )}
-                </div>
-              </div>
-            </Link>
-          ))}
+        <div>
+          <p className="font-bold text-sm">پنل مدیریت</p>
+          <p className="text-xs text-gray-400">برنامه‌ریزی غذا، مدیریت کاربران و گزارشات</p>
         </div>
-      </div>
+        <ChevronLeft className="w-4 h-4 text-gray-300 mr-auto" />
+      </Link>
     </div>
   );
 }
