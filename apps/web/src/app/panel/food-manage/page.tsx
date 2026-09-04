@@ -4,7 +4,7 @@ import { Plus, Trash2, Save, ChevronDown, ChevronUp, Copy, Lock, Unlock, Buildin
 import { clsx } from 'clsx';
 
 // === University Hierarchy ===
-const UNIVERSITIES = {
+const UNIVERSITIES: Record<string, any> = {
   'melimaharat': {
     name: 'دانشگاه ملی مهارت',
     units: {
