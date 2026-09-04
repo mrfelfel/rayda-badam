@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import {
-  Container, Typography, Button, TextField, Paper, Grid, FormControl, InputLabel, Select, MenuItem,
+  Container, Typography, Button, TextField, Paper, FormControl, InputLabel, Select, MenuItem,
   Tabs, Tab, Box, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Stack, Card, CardContent, Divider
 } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGridColDef } from '@mui/x-data-grid';
 import { Download, FilterList, TrendingUp, TrendingDown, Receipt, People, Restaurant } from '@mui/icons-material';
 import { DEMO_TRANSACTIONS, DEMO_RESERVATIONS, DEMO_USERS, USER_GROUPS, DEMO_FOODS, DEMO_PLACES, DAYS, getPrice } from '@/lib/demo-data';
 
@@ -93,32 +93,32 @@ export default function ReportsPage() {
       </Paper>
 
       {/* Quick Stats */}
-      <Grid container spacing={2} sx={{mb:3}}>
-        <Grid size={{xs:0,md:0}}>
+      <Stack direction="row" flexWrap="wrap" gap={2} sx={{mb:3}}>
+        <Box sx={{flex:"1 1 200px",minWidth:200}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل واریزی</Typography>
             <Typography variant="h6" sx={{fontWeight:700}} color="success.main">+{totalIncome.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
-        </Grid>
-        <Grid size={{xs:0,md:0}}>
+        </Box>
+        <Box sx={{flex:"1 1 200px",minWidth:200}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل برداشت</Typography>
             <Typography variant="h6" sx={{fontWeight:700}} color="error.main">-{totalExpense.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
-        </Grid>
-        <Grid size={{xs:0,md:0}}>
+        </Box>
+        <Box sx={{flex:"1 1 200px",minWidth:200}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد کاربران</Typography>
             <Typography variant="h6" sx={{fontWeight:700}}>{totalUsers}</Typography>
           </CardContent></Card>
-        </Grid>
-        <Grid size={{xs:0,md:0}}>
+        </Box>
+        <Box sx={{flex:"1 1 200px",minWidth:200}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد رزروها</Typography>
             <Typography variant="h6" sx={{fontWeight:700}}>{totalReservations}</Typography>
           </CardContent></Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Filters */}
       <Paper sx={{ p: 2, mb: 3 }}>
@@ -127,22 +127,22 @@ export default function ReportsPage() {
           <Button size="small" onClick={() => setShowFilters(!showFilters)}>{showFilters ? 'بستن' : 'باز کردن'}</Button>
         </Box>
         {showFilters && (
-          <Grid container spacing={2}>
-            <Grid size={{xs:0,md:0}}>
+          <Stack direction="row" flexWrap="wrap" gap={2}>
+            <Box sx={{flex:"1 1 200px",minWidth:200}}>
               <TextField fullWidth size="small" label="از تاریخ" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
-            </Grid>
-            <Grid size={{xs:0,md:0}}>
+            </Box>
+            <Box sx={{flex:"1 1 200px",minWidth:200}}>
               <TextField fullWidth size="small" label="تا تاریخ" value={dateTo} onChange={e => setDateTo(e.target.value)} />
-            </Grid>
-            <Grid size={{xs:0,md:0}}>
+            </Box>
+            <Box sx={{flex:"1 1 200px",minWidth:200}}>
               <FormControl fullWidth size="small"><InputLabel>گروه کاربری</InputLabel>
                 <Select value={filterGroup} label="گروه کاربری" onChange={e => setFilterGroup(e.target.value)}>
                   <MenuItem value="all">همه</MenuItem>
                   {USER_GROUPS.map(g => <MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid size={{xs:0,md:0}}>
+            </Box>
+            <Box sx={{flex:"1 1 200px",minWidth:200}}>
               <FormControl fullWidth size="small"><InputLabel>وضعیت</InputLabel>
                 <Select value={filterStatus} label="وضعیت" onChange={e => setFilterStatus(e.target.value)}>
                   <MenuItem value="all">همه</MenuItem>
@@ -151,15 +151,15 @@ export default function ReportsPage() {
                   <MenuItem value="cancelled">لغو شده</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid size={{xs:12}}>
+            </Box>
+            <Box sx={{flex:"1 1 200px",minWidth:200}}>
               <Stack direction="row" spacing={1}>
                 <Button variant="contained" size="small">اعمال فیلتر</Button>
                 <Button variant="outlined" size="small">پاک کردن</Button>
                 <Button variant="outlined" size="small" startIcon={<FilterList />}>ذخیره قالب</Button>
               </Stack>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         )}
       </Paper>
 

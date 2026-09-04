@@ -3,9 +3,9 @@ import { useState } from 'react';
 import {
   Container, Typography, Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions,
   IconButton, Chip, Box, Select, MenuItem, FormControl, InputLabel, Alert,
-  Divider, Stack, Grid, Avatar
+  Divider, Stack, Avatar
 } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGridColDef } from '@mui/x-data-grid';
 import { Add, Edit, Lock, Visibility, Search, FilterList, Download } from '@mui/icons-material';
 import { DEMO_USERS, USER_GROUPS, ACCESS_ROLES, DEMO_TRANSACTIONS } from '@/lib/demo-data';
 
@@ -63,30 +63,30 @@ export default function UsersPage() {
       </Box>
 
       <Box sx={{ p:2, mb:3, bgcolor:'white', borderRadius:3, boxShadow:'0 1px 3px rgba(0,0,0,0.05)' }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid size={{xs:0,md:0}}>
+        <Stack direction="row" flexWrap="wrap" gap={2} alignItems="center">
+          <Box sx={{flex:"1 1 200px",minWidth:200}}>
             <TextField fullWidth size="small" placeholder="جستجو بر اساس نام، خانواده یا کد ملی..." value={search} onChange={e=>setSearch(e.target.value)} slotProps={{input:{startAdornment:<Search sx={{mr:1,color:'grey.400'}} fontSize="small"/>}}}/>
-          </Grid>
-          <Grid size={{xs:0,md:0}}>
+          </Box>
+          <Box sx={{flex:"1 1 200px",minWidth:200}}>
             <FormControl fullWidth size="small"><InputLabel>گروه کاربری</InputLabel>
               <Select value={filterGroup} label="گروه کاربری" onChange={e=>setFilterGroup(e.target.value)}>
                 <MenuItem value="all">همه</MenuItem>
                 {USER_GROUPS.map(g=><MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid size={{xs:0,md:0}}>
+          </Box>
+          <Box sx={{flex:"1 1 200px",minWidth:200}}>
             <FormControl fullWidth size="small"><InputLabel>دانشکده</InputLabel>
               <Select value={filterFaculty} label="دانشکده" onChange={e=>setFilterFaculty(e.target.value)}>
                 <MenuItem value="all">همه</MenuItem>
                 {FACULTIES.map(f=><MenuItem key={f.id} value={f.id}>{f.name}</MenuItem>)}
               </Select>
             </FormControl>
-          </Grid>
-          <Grid size={{xs:0,md:0}}>
+          </Box>
+          <Box sx={{flex:"1 1 200px",minWidth:200}}>
             <Button fullWidth variant="outlined" startIcon={<FilterList/>}>فیلتر پیشرفته</Button>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
 
       <Box sx={{ height:500, bgcolor:'white', borderRadius:3, overflow:'hidden', boxShadow:'0 1px 3px rgba(0,0,0,0.05)' }}>
@@ -98,18 +98,18 @@ export default function UsersPage() {
         <Dialog open onClose={()=>setShowDetail(null)} maxWidth="md" fullWidth>
           <DialogTitle><Box sx={{display:"flex",alignItems:"center",gap:2}}><Avatar sx={{bgcolor:'primary.main'}}>{showDetail.name[0]}</Avatar><div><Typography sx={{fontWeight:700}}>{showDetail.name} {showDetail.family}</Typography><Typography variant="body2" color="text.secondary">{showDetail.uid}</Typography></div></Box></DialogTitle>
           <DialogContent dividers>
-            <Grid container spacing={3}>
-              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography sx={{fontWeight:600}}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Grid>
-              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography sx={{fontWeight:600}}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Grid>
-              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography sx={{fontWeight:600}}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Grid>
-              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography sx={{fontWeight:600}} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Grid>
-              <Grid size={{xs:12}}><Divider/></Grid>
-              <Grid size={{xs:12}}><Typography variant="subtitle2" mb={1}>آخرین تراکنش‌ها</Typography>
+            <Stack direction="row" flexWrap="wrap" gap={2}>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography sx={{fontWeight:600}}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Box>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography sx={{fontWeight:600}}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Box>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography sx={{fontWeight:600}}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Box>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography sx={{fontWeight:600}} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Box>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Divider/></Box>
+              <Box sx={{flex:"1 1 200px",minWidth:200}}><Typography variant="subtitle2" mb={1}>آخرین تراکنش‌ها</Typography>
                 {DEMO_TRANSACTIONS.filter(t=>t.uid===showDetail.uid).slice(0,3).map(t=>(
                   <Box sx={{display:"flex",justifyContent:"space-between",py:0.5}}><Typography variant="body2">{t.desc}</Typography><Typography variant="body2" sx={{fontWeight:600}} color={t.type==='UP'?'success.main':'error.main'}>{t.type==='UP'?'+':'-'}{t.amount.toLocaleString('fa-IR')}</Typography></Box>
                 ))}
-              </Grid>
-            </Grid>
+              </Box>
+            </Box>
           </DialogContent>
           <DialogActions><Button onClick={()=>setShowDetail(null)}>بستن</Button></DialogActions>
         </Dialog>
@@ -122,11 +122,11 @@ export default function UsersPage() {
           <DialogContent>
             <Stack spacing={2} mt={1}>
               <TextField label="کد ملی" value={editUser.uid} onChange={e=>setEditUser({...editUser,uid:e.target.value})} fullWidth size="small" disabled={!!users.find(u=>u.uid===editUser.uid)}/>
-              <Grid container spacing={2}><Grid size={{xs:6}}><TextField label="نام" value={editUser.name} onChange={e=>setEditUser({...editUser,name:e.target.value})} fullWidth size="small"/></Grid><Grid size={{xs:6}}><TextField label="خانواده" value={editUser.family} onChange={e=>setEditUser({...editUser,family:e.target.value})} fullWidth size="small"/></Grid></Grid>
-              <Grid container spacing={2}>
-                <Grid size={{xs:6}}><FormControl fullWidth size="small"><InputLabel>گروه</InputLabel><Select value={editUser.group} label="گروه" onChange={e=>setEditUser({...editUser,group:e.target.value})}>{USER_GROUPS.map(g=><MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}</Select></FormControl></Grid>
-                <Grid size={{xs:6}}><FormControl fullWidth size="small"><InputLabel>دسترسی</InputLabel><Select value={editUser.role} label="دسترسی" onChange={e=>setEditUser({...editUser,role:e.target.value})}>{ACCESS_ROLES.map(r=><MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}</Select></FormControl></Grid>
-              </Grid>
+              <Stack direction="row" flexWrap="wrap" gap={2}><Box sx={{flex:"1 1 200px",minWidth:200}}><TextField label="نام" value={editUser.name} onChange={e=>setEditUser({...editUser,name:e.target.value})} fullWidth size="small"/></Box><Box sx={{flex:"1 1 200px",minWidth:200}}><TextField label="خانواده" value={editUser.family} onChange={e=>setEditUser({...editUser,family:e.target.value})} fullWidth size="small"/></Box></Box>
+              <Stack direction="row" flexWrap="wrap" gap={2}>
+                <Box sx={{flex:"1 1 200px",minWidth:200}}><FormControl fullWidth size="small"><InputLabel>گروه</InputLabel><Select value={editUser.group} label="گروه" onChange={e=>setEditUser({...editUser,group:e.target.value})}>{USER_GROUPS.map(g=><MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}</Select></FormControl></Box>
+                <Box sx={{flex:"1 1 200px",minWidth:200}}><FormControl fullWidth size="small"><InputLabel>دسترسی</InputLabel><Select value={editUser.role} label="دسترسی" onChange={e=>setEditUser({...editUser,role:e.target.value})}>{ACCESS_ROLES.map(r=><MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}</Select></FormControl></Box>
+              </Box>
               <FormControl fullWidth size="small"><InputLabel>دانشکده</InputLabel><Select value={editUser.faculty} label="دانشکده" onChange={e=>setEditUser({...editUser,faculty:e.target.value})}>{FACULTIES.map(f=><MenuItem key={f.id} value={f.id}>{f.name}</MenuItem>)}</Select></FormControl>
               <TextField label="تلفن" value={editUser.phone} onChange={e=>setEditUser({...editUser,phone:e.target.value})} fullWidth size="small"/>
               {!users.find(u=>u.uid===editUser.uid) && <TextField label="رمز عبور" type="password" value={editUser.password} onChange={e=>setEditUser({...editUser,password:e.target.value})} fullWidth size="small"/>}
