@@ -55,7 +55,7 @@ export default function UsersPage() {
   return (
     <Container maxWidth="lg" sx={{ py:3 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" fontWeight={700}>مدیریت کاربران ({filtered.length})</Typography>
+        <Typography variant="h5" sx={{fontWeight:700}}>مدیریت کاربران ({filtered.length})</Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" startIcon={<Download/>}>خروجی اکسل</Button>
           <Button variant="contained" startIcon={<Add/>} onClick={()=>{setEditUser({uid:'',name:'',family:'',group:'student',role:'viewer',faculty:'amirkabir',phone:'',password:''});setShowForm(true);}}>کاربر جدید</Button>
@@ -96,17 +96,17 @@ export default function UsersPage() {
       {/* Detail Dialog */}
       {showDetail && (
         <Dialog open onClose={()=>setShowDetail(null)} maxWidth="md" fullWidth>
-          <DialogTitle><Box display="flex" alignItems="center" gap={2}><Avatar sx={{bgcolor:'primary.main'}}>{showDetail.name[0]}</Avatar><div><Typography fontWeight={700}>{showDetail.name} {showDetail.family}</Typography><Typography variant="body2" color="text.secondary">{showDetail.uid}</Typography></div></Box></DialogTitle>
+          <DialogTitle><Box display="flex" alignItems="center" gap={2}><Avatar sx={{bgcolor:'primary.main'}}>{showDetail.name[0]}</Avatar><div><Typography sx={{fontWeight:700}}>{showDetail.name} {showDetail.family}</Typography><Typography variant="body2" color="text.secondary">{showDetail.uid}</Typography></div></Box></DialogTitle>
           <DialogContent dividers>
             <Grid container spacing={3}>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography fontWeight={600}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography fontWeight={600}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography fontWeight={600}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography fontWeight={600} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Grid>
+              <Grid item xs={6}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography sx={{fontWeight:600}}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Grid>
+              <Grid item xs={6}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography sx={{fontWeight:600}}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Grid>
+              <Grid item xs={6}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography sx={{fontWeight:600}}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Grid>
+              <Grid item xs={6}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography sx={{fontWeight:600}} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Grid>
               <Grid item xs={12}><Divider/></Grid>
               <Grid item xs={12}><Typography variant="subtitle2" mb={1}>آخرین تراکنش‌ها</Typography>
                 {DEMO_TRANSACTIONS.filter(t=>t.uid===showDetail.uid).slice(0,3).map(t=>(
-                  <Box key={t.id} display="flex" justifyContent="space-between" py={0.5}><Typography variant="body2">{t.desc}</Typography><Typography variant="body2" fontWeight={600} color={t.type==='UP'?'success.main':'error.main'}>{t.type==='UP'?'+':'-'}{t.amount.toLocaleString('fa-IR')}</Typography></Box>
+                  <Box key={t.id} display="flex" justifyContent="space-between" py={0.5}><Typography variant="body2">{t.desc}</Typography><Typography variant="body2" sx={{fontWeight:600}} color={t.type==='UP'?'success.main':'error.main'}>{t.type==='UP'?'+':'-'}{t.amount.toLocaleString('fa-IR')}</Typography></Box>
                 ))}
               </Grid>
             </Grid>

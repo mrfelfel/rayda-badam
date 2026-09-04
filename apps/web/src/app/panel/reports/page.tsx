@@ -79,7 +79,7 @@ export default function ReportsPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 3 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h5" fontWeight={700}>گزارشات</Typography>
+        <Typography variant="h5" sx={{fontWeight:700}}>گزارشات</Typography>
         <Button variant="outlined" startIcon={<Download />}>خروجی اکسل</Button>
       </Box>
 
@@ -97,25 +97,25 @@ export default function ReportsPage() {
         <Grid item xs={6} md={3}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل واریزی</Typography>
-            <Typography variant="h6" fontWeight={700} color="success.main">+{totalIncome.toLocaleString('fa-IR')}</Typography>
+            <Typography variant="h6" sx={{fontWeight:700}} color="success.main">+{totalIncome.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل برداشت</Typography>
-            <Typography variant="h6" fontWeight={700} color="error.main">-{totalExpense.toLocaleString('fa-IR')}</Typography>
+            <Typography variant="h6" sx={{fontWeight:700}} color="error.main">-{totalExpense.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد کاربران</Typography>
-            <Typography variant="h6" fontWeight={700}>{totalUsers}</Typography>
+            <Typography variant="h6" sx={{fontWeight:700}}>{totalUsers}</Typography>
           </CardContent></Card>
         </Grid>
         <Grid item xs={6} md={3}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد رزروها</Typography>
-            <Typography variant="h6" fontWeight={700}>{totalReservations}</Typography>
+            <Typography variant="h6" sx={{fontWeight:700}}>{totalReservations}</Typography>
           </CardContent></Card>
         </Grid>
       </Grid>
@@ -123,7 +123,7 @@ export default function ReportsPage() {
       {/* Filters */}
       <Paper sx={{ p: 2, mb: 3 }}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-          <Typography variant="subtitle1" fontWeight={600}>فیلترها</Typography>
+          <Typography variant="subtitle1" sx={{fontWeight:600}}>فیلترها</Typography>
           <Button size="small" onClick={() => setShowFilters(!showFilters)}>{showFilters ? 'بستن' : 'باز کردن'}</Button>
         </Box>
         {showFilters && (

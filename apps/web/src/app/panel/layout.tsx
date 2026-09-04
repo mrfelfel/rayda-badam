@@ -20,7 +20,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <Drawer variant="permanent" sx={{ width: DRAWER_WIDTH, '& .MuiDrawer-paper': { width: DRAWER_WIDTH, direction: 'rtl', borderLeft: '1px solid #f0f0f0' } }}>
-        <Toolbar><Typography variant="h6" fontWeight={700} sx={{color:'primary.main'}}>پنل مدیریت</Typography></Toolbar>
+        <Toolbar><Typography variant="h6" sx={{fontWeight:700,color:'primary.main'}}>پنل مدیریت</Typography></Toolbar>
         <List>
           {MENU.map(item => (
             <ListItem key={item.href} component={'a' as any} href={item.href} selected={pathname === item.href} sx={{ borderRadius: 2, mx: 1, mb: 0.5, cursor:'pointer', textDecoration:'none', '&.Mui-selected': { bgcolor: 'primary.50', color: 'primary.main' } }}>
