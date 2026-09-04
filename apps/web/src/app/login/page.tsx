@@ -15,14 +15,13 @@ export default function LoginPage() {
     if (!username || !password) { setError('نام کاربری و رمز عبور را وارد کنید'); return; }
     setLoading(true); setError('');
     try {
-      const API = process.env.NEXT_PUBLIC_API_URL || 'https://users.rayda.ir';
-      const res = await fetch(`${API}/login`, {
+      const res = await fetch('/api/login', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
       const data = await res.json();
       if (data.status) { login(data.token, username); }
-      else { setError('نام کاربری یا کلمه عبور صحیح نیست'); setPassword(''); }
+      else { setError(data.message || 'نام کاربری یا کلمه عبور صحیح نیست'); setPassword(''); }
     } catch { setError('خطا در برقراری ارتباط با سرور'); }
     finally { setLoading(false); }
   };
