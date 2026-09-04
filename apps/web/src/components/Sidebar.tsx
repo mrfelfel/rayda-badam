@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Utensils, Wallet, User, BarChart3, Truck, Settings } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { Utensils, Wallet, User, BarChart3, Truck, Settings, LogOut } from 'lucide-react';
 import { clsx } from 'clsx';
 
 const menuItems = [
@@ -19,11 +20,13 @@ const adminItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { logout, uid } = useAuth();
   return (
     <aside className="fixed right-0 top-0 h-full w-64 bg-white border-l border-gray-100 shadow-sm flex flex-col">
       <div className="p-5 border-b border-gray-100">
         <h1 className="text-lg font-bold text-brand-700">اتوماسیون تغذیه بادام</h1>
         <p className="text-xs text-gray-400 mt-1">نسخه ۲.۰ — با همکاری mimo code</p>
+        {uid && <p className="text-xs text-gray-500 mt-1">{uid}</p>}
       </div>
       <nav className="flex-1 p-3 space-y-1">
         {menuItems.map((item) => (
@@ -38,7 +41,10 @@ export function Sidebar() {
           </Link>
         ))}
       </nav>
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-gray-100 space-y-2">
+        <button onClick={logout} className="flex items-center gap-2 text-sm text-red-500 hover:text-red-600 w-full">
+          <LogOut className="w-4 h-4" />خروج
+        </button>
         <div className="text-xs text-gray-400 text-center">badoom v2.0 — AED</div>
       </div>
     </aside>
