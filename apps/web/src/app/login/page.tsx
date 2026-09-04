@@ -34,7 +34,7 @@ export default function LoginPage() {
             <Lock className="w-8 h-8 text-brand-600" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">ورود به سامانه</h1>
-          <p className="text-sm text-gray-500 mt-2">اتوماسیون تغذیه بادام</p>
+          <p className="text-sm text-gray-500 mt-2">اتوماسیون تغذیه صورتی</p>
         </div>
         <form onSubmit={handleSubmit} className="card space-y-4">
           {error && (
@@ -62,7 +62,7 @@ export default function LoginPage() {
             {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'ورود'}
           </button>
         </form>
-        <p className="text-center text-xs text-gray-400 mt-6">کلیه حقوق برای عصر ارتباطات دهکده محفوظ است</p>
+        <p className="text-center text-xs text-gray-400 mt-6">تمامی حقوق متعلق به موسسه غیرتجاری شبکه صورتی است</p>
       </div>
     </div>
   );

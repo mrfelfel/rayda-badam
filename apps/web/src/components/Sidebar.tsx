@@ -27,8 +27,8 @@ export function Sidebar() {
   return (
     <aside className="fixed right-0 top-0 h-full w-64 bg-white border-l border-gray-100 shadow-sm flex flex-col">
       <div className="p-5 border-b border-gray-100">
-        <h1 className="text-lg font-bold text-brand-700">اتوماسیون تغذیه بادام</h1>
-        <p className="text-xs text-gray-400 mt-1">نسخه ۲.۰ — با همکاری mimo code</p>
+        <h1 className="text-lg font-bold text-brand-700">اتوماسیون تغذیه صورتی</h1>
+        <p className="text-xs text-gray-400 mt-1">نسخه ۲.۰ — موسسه غیرتجاری شبکه صورتی</p>
         {uid && <p className="text-xs text-gray-500 mt-1 font-mono">{uid}</p>}
       </div>
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
@@ -48,7 +48,7 @@ export function Sidebar() {
         <button onClick={logout} className="flex items-center gap-2 text-sm text-red-500 hover:text-red-600 w-full">
           <LogOut className="w-4 h-4" />خروج
         </button>
-        <div className="text-xs text-gray-400 text-center">badoom v2.0 — AED</div>
+        <div className="text-xs text-gray-400 text-center">صورتی v2.0 — Pink Network</div>
       </div>
     </aside>
   );

@@ -7,7 +7,7 @@ export default function ProfilePage() {
       <div className="card">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center"><User className="w-8 h-8 text-brand-600" /></div>
-          <div><p className="font-bold text-lg">کاربر بادام</p><p className="text-sm text-gray-500">دانشگاه صنعتی امیرکبیر</p></div>
+          <div><p className="font-bold text-lg">کاربر صورتی</p><p className="text-sm text-gray-500">دانشگاه صنعتی امیرکبیر</p></div>
         </div>
       </div>
       <div className="card">

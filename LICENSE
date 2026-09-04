@@ -1,0 +1,186 @@
+Surati Network Open Source License (SNOSL) v1.0
+================================================
+
+Copyright (c) 2017-2026 Pink Network Non-Commercial Institute
+(موسسه غیر تجاری شبکه صورتی)
+All rights reserved.
+
+This software is released under the Surati Network Open Source License (SNOSL).
+The SNOSL is an open source license inspired by AGPLv3 and MPL-2.0, with
+additional provisions for commercial use restrictions and transparent funding.
+
+----------------------------------------------------------------------------
+                    DEFINITIONS
+----------------------------------------------------------------------------
+
+1. "Software" refers to the work licensed under this License, including
+   all source code, documentation, and associated files.
+
+2. "Original Author" refers to the Pink Network Non-Commercial Institute
+   (موسسه غیر تجاری شبکه صورتی) and its contributors.
+
+3. "Contributor" refers to any individual or entity that contributes
+   modifications or additions to the Software.
+
+4. "Commercial Use" refers to any use of the Software, in whole or in part,
+   for revenue-generating purposes, including but not limited to:
+   - Selling the Software or services based on it
+   - Using the Software in a commercial product or SaaS offering
+   - Using the Software to generate advertising revenue
+   - Providing paid consulting or support based on the Software
+
+5. "Non-Commercial Use" refers to personal, educational, research, or
+   NGO use that does not generate revenue.
+
+6. "Network Use" refers to use of the Software over a network, including
+   SaaS, cloud hosting, or any form of remote access.
+
+----------------------------------------------------------------------------
+                    GRANT OF RIGHTS
+----------------------------------------------------------------------------
+
+Subject to the terms of this License, the Original Author grants you
+a worldwide, royalty-free, non-exclusive license to:
+
+(a) Use, copy, and distribute the Software in unmodified form for
+    Non-Commercial purposes;
+
+(b) Modify the Software and distribute modified versions for
+    Non-Commercial purposes;
+
+(c) Use the Software over a network for Non-Commercial purposes;
+
+provided that:
+
+- You retain this License in all copies of the Software
+- You include the complete copyright notice in all distributions
+- You do not remove or alter any proprietary notices
+- You comply with the Attribution Requirements below
+
+----------------------------------------------------------------------------
+                    ATTRIBUTION REQUIREMENTS
+----------------------------------------------------------------------------
+
+Any use, distribution, or derivative work MUST include:
+
+1. A visible copyright notice: "Copyright (c) 2017-2026 Pink Network
+   Non-Commercial Institute"
+
+2. A reference to the original project name: "اتوماسیون تغذیه صورتی"
+
+3. A copy of this license or a link to it
+
+4. The following attribution in "About" pages, documentation, or
+   footers: "Built with Pink Network Open Source technology"
+
+----------------------------------------------------------------------------
+                    COMMERCIAL USE RESTRICTION
+----------------------------------------------------------------------------
+
+Commercial Use of the Software is PROHIBITED without obtaining a
+Commercial License from the Pink Network Non-Commercial Institute.
+
+To obtain a Commercial License, contact:
+  network@surati.ir
+
+The Commercial License terms include:
+
+1. An annual support and maintenance fee, which is:
+   - Significantly lower than comparable commercial alternatives
+   - Negotiable based on organization size and usage scope
+   - Transparently published in annual reports
+
+2. A commitment to transparent accounting of all fees received,
+   which will be published in the Institute's annual report.
+
+3. A portion of all fees is allocated to:
+   - AI model costs and AI developer compensation
+   - Human developer salaries and benefits
+   - Research and development activities
+   - Support for open source freedom and NGO initiatives
+   - Economic development in the knowledge-based economy sector
+
+----------------------------------------------------------------------------
+                    COMMUNITY USE
+----------------------------------------------------------------------------
+
+Notwithstanding the above, the following uses are explicitly permitted
+without a Commercial License:
+
+(a) Use by educational institutions for teaching and research
+(b) Use by registered NGOs and non-profit organizations
+(c) Use by government entities for public service delivery
+(d) Personal use and experimentation
+(e) Contribution of code back to the project
+
+----------------------------------------------------------------------------
+                    NETWORK USE PROVISIONS
+----------------------------------------------------------------------------
+
+If you use the Software over a network (e.g., as a SaaS or web service):
+
+(a) For Non-Commercial purposes: No additional requirements beyond
+    the Attribution Requirements above.
+
+(b) For Commercial purposes: A Commercial License is required, AND
+    you must make the source code of your modifications available
+    to your users.
+
+----------------------------------------------------------------------------
+                    CONTRIBUTION LICENSE
+----------------------------------------------------------------------------
+
+By contributing code to this project, you agree that your contributions
+will be licensed under the same SNOSL v1.0 license. You also grant
+the Original Author the right to sublicense contributions under
+compatible open source licenses for Non-Commercial use.
+
+----------------------------------------------------------------------------
+                    LIMITATION OF LIABILITY
+----------------------------------------------------------------------------
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE ORIGINAL AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+----------------------------------------------------------------------------
+                    GOVERNING LAW
+----------------------------------------------------------------------------
+
+This License shall be governed by and construed in accordance with the
+laws of the Islamic Republic of Iran and the intellectual property
+protection laws applicable therein, including the Law on the Protection
+of the Rights of Authors, Inventors and Artists (قانون حمایت از حقوق
+مولفان، مخترعان و هنرمندان).
+
+Any disputes arising from this License shall be resolved through the
+judicial authorities of the Islamic Republic of Iran.
+
+----------------------------------------------------------------------------
+                    PINK NETWORK NON-COMMERCIAL INSTITUTE
+----------------------------------------------------------------------------
+
+شبکه صورتی یک موسسه غیرتجاری انتفاعی با مدل اجتماعی است که اهداف
+زیر را دنبال می‌کند:
+
+- حمایت از کارآفرینی و توسعه اقتصاد دانش‌بنیان
+- حمایت از آزادی نرم‌افزار به عنوان کد
+- کمک به سازمان‌های غیردولتی (NGO) مختلف
+- شفافیت مالی و انتشار هزینه‌ها
+- پرداخت هزینه‌های هوش مصنوعی، حقوق برنامه‌نویسان و محققین R&D
+
+تمام درآمد حاصل از لایسنس‌های تجاری صرف اهداف فوق می‌شود و
+صورت‌های مالی شفافانه منتشر خواهد شد.
+
+----------------------------------------------------------------------------
+                    VERSION HISTORY
+----------------------------------------------------------------------------
+
+v1.0 - 2026-09-04 - Initial release
+
+For questions about this license, contact: network@surati.ir
+For commercial licensing inquiries: network@surati.ir

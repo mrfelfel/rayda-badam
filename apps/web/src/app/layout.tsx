@@ -4,7 +4,7 @@ import { AuthProvider } from '@/lib/auth';
 import { LayoutShell } from '@/components/LayoutShell';
 
 export const metadata: Metadata = {
-  title: 'اتوماسیون تغذیه بادام',
+  title: 'اتوماسیون تغذیه صورتی',
   description: 'سیستم رزرو غذا - دانشگاه صنعتی امیرکبیر',
 };
 

@@ -68,7 +68,7 @@ export const transactions = sqliteTable('transactions', {
   type: text('type').notNull(),
   description: text('description').notNull(),
   date: text('date').notNull(),
-  issuer: text('issuer').default('rayda-system'),
+  issuer: text('issuer').default('surati-network'),
   tag: text('tag').default('self-food'),
   updatedAt: text('updated_at').default(''),
 });
