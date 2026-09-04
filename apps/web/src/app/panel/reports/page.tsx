@@ -78,7 +78,7 @@ export default function ReportsPage() {
 
   return (
     <Container maxWidth="lg" sx={{ py: 3 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"center",mb:3}}>
         <Typography variant="h5" sx={{fontWeight:700}}>گزارشات</Typography>
         <Button variant="outlined" startIcon={<Download />}>خروجی اکسل</Button>
       </Box>
@@ -122,7 +122,7 @@ export default function ReportsPage() {
 
       {/* Filters */}
       <Paper sx={{ p: 2, mb: 3 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"center",mb:2}}>
           <Typography variant="subtitle1" sx={{fontWeight:600}}>فیلترها</Typography>
           <Button size="small" onClick={() => setShowFilters(!showFilters)}>{showFilters ? 'بستن' : 'باز کردن'}</Button>
         </Box>
