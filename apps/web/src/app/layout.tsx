@@ -5,7 +5,9 @@ import { LayoutShell } from '@/components/LayoutShell';
 
 export const metadata: Metadata = {
   title: 'اتوماسیون تغذیه صورتی',
-  description: 'سیستم رزرو غذا - دانشگاه صنعتی امیرکبیر',
+  description: 'سفارش و رزرو غذا — موسسه غیرتجاری شبکه صورتی',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  themeColor: '#ec4899',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

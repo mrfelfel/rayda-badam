@@ -1,68 +1,67 @@
 'use client';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { Lock, User, AlertCircle } from 'lucide-react';
+import { Lock, User, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password) { setError('نام کاربری و رمز عبور را وارد کنید'); return; }
+    if (!username || !password) { setError('کد ملی و رمز را وارد کنید'); return; }
     setLoading(true); setError('');
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+      const res = await fetch('/api/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({username, password}) });
       const data = await res.json();
-      if (data.status) { login(data.token, username); }
-      else { setError(data.message || 'نام کاربری یا کلمه عبور صحیح نیست'); setPassword(''); }
-    } catch { setError('خطا در برقراری ارتباط با سرور'); }
+      if (data.status) { login(data.token, username); } else { setError(data.message || 'نام کاربری یا رمز اشتباه است'); setPassword(''); }
+    } catch { setError('خطا در اتصال به سرور'); }
     finally { setLoading(false); }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-50 to-white">
-      <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-8 h-8 text-brand-600" />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900">ورود به سامانه</h1>
-          <p className="text-sm text-gray-500 mt-2">اتوماسیون تغذیه صورتی</p>
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Top pink section */}
+      <div className="bg-gradient-to-b from-pink-500 to-pink-400 px-6 pt-16 pb-20 text-center">
+        <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-pink-300">
+          <span className="text-4xl">🍽️</span>
         </div>
-        <form onSubmit={handleSubmit} className="card space-y-4">
-          {error && (
-            <div className="flex items-center gap-2 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
-              <AlertCircle className="w-4 h-4 shrink-0" />{error}
-            </div>
-          )}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">نام کاربری</label>
-            <div className="relative">
-              <User className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input type="text" value={username} onChange={e => setUsername(e.target.value)} className="input pr-10" placeholder="کد ملی" autoComplete="username" />
-            </div>
-            <p className="text-xs text-gray-400 mt-1">نام کاربری معمولا برابر کد ملی است</p>
+        <h1 className="text-2xl font-bold text-white">اتوماسیون تغذیه صورتی</h1>
+        <p className="text-sm text-white/80 mt-2">موسسه غیرتجاری شبکه صورتی</p>
+      </div>
+
+      {/* Form card */}
+      <div className="px-6 -mt-10 flex-1">
+        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-6 space-y-4">
+          {error && <p className="text-sm text-red-500 bg-red-50 p-3 rounded-xl text-center">{error}</p>}
+
+          <div className="relative">
+            <User className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
+            <input type="text" value={username} onChange={e => setUsername(e.target.value)} className="input pr-12 text-center text-lg tracking-widest" placeholder="کد ملی" autoComplete="username" />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">گذرواژه</label>
-            <div className="relative">
-              <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="input pr-10" placeholder="گذرواژه" autoComplete="current-password" />
-            </div>
-            <p className="text-xs text-gray-400 mt-1">هنگام ثبت نام توسط خودتان انتخاب شده است</p>
+
+          <div className="relative">
+            <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300" />
+            <input type={showPass?'text':'password'} value={password} onChange={e => setPassword(e.target.value)} className="input pr-12 pl-12" placeholder="رمز عبور" autoComplete="current-password" />
+            <button type="button" onClick={() => setShowPass(!showPass)} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300">
+              {showPass ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
           </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full flex items-center justify-center gap-2">
-            {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : 'ورود'}
+
+          <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-base rounded-2xl">
+            {loading ? <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" /> : 'ورود'}
           </button>
+
+          <button type="button" className="btn-ghost w-full text-sm">رمز عبور را فراموش کرده‌ام</button>
         </form>
-        <p className="text-center text-xs text-gray-400 mt-6">تمامی حقوق متعلق به موسسه غیرتجاری شبکه صورتی است</p>
+
+        <p className="text-center text-[10px] text-gray-300 mt-8 pb-8">
+          تمامی حقوق متعلق به موسسه غیرتجاری شبکه صورتی است
+        </p>
       </div>
     </div>
   );
