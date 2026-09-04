@@ -1,3 +1,3 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = { transpilePackages: ['@rayda/shared'] };
+const nextConfig = {};
 module.exports = nextConfig;
