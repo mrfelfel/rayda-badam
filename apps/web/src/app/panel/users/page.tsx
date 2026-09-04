@@ -64,10 +64,10 @@ export default function UsersPage() {
 
       <Box sx={{ p:2, mb:3, bgcolor:'white', borderRadius:3, boxShadow:'0 1px 3px rgba(0,0,0,0.05)' }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={4}>
+          <Grid size={{xs:0,md:0}}>
             <TextField fullWidth size="small" placeholder="جستجو بر اساس نام، خانواده یا کد ملی..." value={search} onChange={e=>setSearch(e.target.value)} slotProps={{input:{startAdornment:<Search sx={{mr:1,color:'grey.400'}} fontSize="small"/>}}}/>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid size={{xs:0,md:0}}>
             <FormControl fullWidth size="small"><InputLabel>گروه کاربری</InputLabel>
               <Select value={filterGroup} label="گروه کاربری" onChange={e=>setFilterGroup(e.target.value)}>
                 <MenuItem value="all">همه</MenuItem>
@@ -75,7 +75,7 @@ export default function UsersPage() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid size={{xs:0,md:0}}>
             <FormControl fullWidth size="small"><InputLabel>دانشکده</InputLabel>
               <Select value={filterFaculty} label="دانشکده" onChange={e=>setFilterFaculty(e.target.value)}>
                 <MenuItem value="all">همه</MenuItem>
@@ -83,7 +83,7 @@ export default function UsersPage() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} md={2}>
+          <Grid size={{xs:0,md:0}}>
             <Button fullWidth variant="outlined" startIcon={<FilterList/>}>فیلتر پیشرفته</Button>
           </Grid>
         </Grid>
@@ -99,12 +99,12 @@ export default function UsersPage() {
           <DialogTitle><Box sx={{display:"flex",alignItems:"center",gap:2}}><Avatar sx={{bgcolor:'primary.main'}}>{showDetail.name[0]}</Avatar><div><Typography sx={{fontWeight:700}}>{showDetail.name} {showDetail.family}</Typography><Typography variant="body2" color="text.secondary">{showDetail.uid}</Typography></div></Box></DialogTitle>
           <DialogContent dividers>
             <Grid container spacing={3}>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography sx={{fontWeight:600}}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography sx={{fontWeight:600}}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography sx={{fontWeight:600}}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Grid>
-              <Grid item xs={6}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography sx={{fontWeight:600}} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Grid>
-              <Grid item xs={12}><Divider/></Grid>
-              <Grid item xs={12}><Typography variant="subtitle2" mb={1}>آخرین تراکنش‌ها</Typography>
+              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">گروه کاربری</Typography><Typography sx={{fontWeight:600}}>{USER_GROUPS.find(g=>g.id===showDetail.group)?.name}</Typography></Grid>
+              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">سطح دسترسی</Typography><Typography sx={{fontWeight:600}}>{ACCESS_ROLES.find(r=>r.id===showDetail.role)?.name}</Typography></Grid>
+              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">دانشکده</Typography><Typography sx={{fontWeight:600}}>{FACULTIES.find(f=>f.id===showDetail.faculty)?.name}</Typography></Grid>
+              <Grid size={{xs:6}}><Typography variant="body2" color="text.secondary">موجودی</Typography><Typography sx={{fontWeight:600}} color={showDetail.balance>=0?'success.main':'error.main'}>{showDetail.balance.toLocaleString('fa-IR')} تومان</Typography></Grid>
+              <Grid size={{xs:12}}><Divider/></Grid>
+              <Grid size={{xs:12}}><Typography variant="subtitle2" mb={1}>آخرین تراکنش‌ها</Typography>
                 {DEMO_TRANSACTIONS.filter(t=>t.uid===showDetail.uid).slice(0,3).map(t=>(
                   <Box sx={{display:"flex",justifyContent:"space-between",py:0.5}}><Typography variant="body2">{t.desc}</Typography><Typography variant="body2" sx={{fontWeight:600}} color={t.type==='UP'?'success.main':'error.main'}>{t.type==='UP'?'+':'-'}{t.amount.toLocaleString('fa-IR')}</Typography></Box>
                 ))}
@@ -122,10 +122,10 @@ export default function UsersPage() {
           <DialogContent>
             <Stack spacing={2} mt={1}>
               <TextField label="کد ملی" value={editUser.uid} onChange={e=>setEditUser({...editUser,uid:e.target.value})} fullWidth size="small" disabled={!!users.find(u=>u.uid===editUser.uid)}/>
-              <Grid container spacing={2}><Grid item xs={6}><TextField label="نام" value={editUser.name} onChange={e=>setEditUser({...editUser,name:e.target.value})} fullWidth size="small"/></Grid><Grid item xs={6}><TextField label="خانواده" value={editUser.family} onChange={e=>setEditUser({...editUser,family:e.target.value})} fullWidth size="small"/></Grid></Grid>
+              <Grid container spacing={2}><Grid size={{xs:6}}><TextField label="نام" value={editUser.name} onChange={e=>setEditUser({...editUser,name:e.target.value})} fullWidth size="small"/></Grid><Grid size={{xs:6}}><TextField label="خانواده" value={editUser.family} onChange={e=>setEditUser({...editUser,family:e.target.value})} fullWidth size="small"/></Grid></Grid>
               <Grid container spacing={2}>
-                <Grid item xs={6}><FormControl fullWidth size="small"><InputLabel>گروه</InputLabel><Select value={editUser.group} label="گروه" onChange={e=>setEditUser({...editUser,group:e.target.value})}>{USER_GROUPS.map(g=><MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}</Select></FormControl></Grid>
-                <Grid item xs={6}><FormControl fullWidth size="small"><InputLabel>دسترسی</InputLabel><Select value={editUser.role} label="دسترسی" onChange={e=>setEditUser({...editUser,role:e.target.value})}>{ACCESS_ROLES.map(r=><MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}</Select></FormControl></Grid>
+                <Grid size={{xs:6}}><FormControl fullWidth size="small"><InputLabel>گروه</InputLabel><Select value={editUser.group} label="گروه" onChange={e=>setEditUser({...editUser,group:e.target.value})}>{USER_GROUPS.map(g=><MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>)}</Select></FormControl></Grid>
+                <Grid size={{xs:6}}><FormControl fullWidth size="small"><InputLabel>دسترسی</InputLabel><Select value={editUser.role} label="دسترسی" onChange={e=>setEditUser({...editUser,role:e.target.value})}>{ACCESS_ROLES.map(r=><MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>)}</Select></FormControl></Grid>
               </Grid>
               <FormControl fullWidth size="small"><InputLabel>دانشکده</InputLabel><Select value={editUser.faculty} label="دانشکده" onChange={e=>setEditUser({...editUser,faculty:e.target.value})}>{FACULTIES.map(f=><MenuItem key={f.id} value={f.id}>{f.name}</MenuItem>)}</Select></FormControl>
               <TextField label="تلفن" value={editUser.phone} onChange={e=>setEditUser({...editUser,phone:e.target.value})} fullWidth size="small"/>

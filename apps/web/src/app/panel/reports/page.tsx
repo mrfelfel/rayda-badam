@@ -94,25 +94,25 @@ export default function ReportsPage() {
 
       {/* Quick Stats */}
       <Grid container spacing={2} sx={{mb:3}}>
-        <Grid item xs={6} md={3}>
+        <Grid size={{xs:0,md:0}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل واریزی</Typography>
             <Typography variant="h6" sx={{fontWeight:700}} color="success.main">+{totalIncome.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid size={{xs:0,md:0}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">کل برداشت</Typography>
             <Typography variant="h6" sx={{fontWeight:700}} color="error.main">-{totalExpense.toLocaleString('fa-IR')}</Typography>
           </CardContent></Card>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid size={{xs:0,md:0}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد کاربران</Typography>
             <Typography variant="h6" sx={{fontWeight:700}}>{totalUsers}</Typography>
           </CardContent></Card>
         </Grid>
-        <Grid item xs={6} md={3}>
+        <Grid size={{xs:0,md:0}}>
           <Card><CardContent>
             <Typography variant="body2" color="text.secondary">تعداد رزروها</Typography>
             <Typography variant="h6" sx={{fontWeight:700}}>{totalReservations}</Typography>
@@ -128,13 +128,13 @@ export default function ReportsPage() {
         </Box>
         {showFilters && (
           <Grid container spacing={2}>
-            <Grid item xs={6} md={3}>
+            <Grid size={{xs:0,md:0}}>
               <TextField fullWidth size="small" label="از تاریخ" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
             </Grid>
-            <Grid item xs={6} md={3}>
+            <Grid size={{xs:0,md:0}}>
               <TextField fullWidth size="small" label="تا تاریخ" value={dateTo} onChange={e => setDateTo(e.target.value)} />
             </Grid>
-            <Grid item xs={6} md={3}>
+            <Grid size={{xs:0,md:0}}>
               <FormControl fullWidth size="small"><InputLabel>گروه کاربری</InputLabel>
                 <Select value={filterGroup} label="گروه کاربری" onChange={e => setFilterGroup(e.target.value)}>
                   <MenuItem value="all">همه</MenuItem>
@@ -142,7 +142,7 @@ export default function ReportsPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={6} md={3}>
+            <Grid size={{xs:0,md:0}}>
               <FormControl fullWidth size="small"><InputLabel>وضعیت</InputLabel>
                 <Select value={filterStatus} label="وضعیت" onChange={e => setFilterStatus(e.target.value)}>
                   <MenuItem value="all">همه</MenuItem>
@@ -152,7 +152,7 @@ export default function ReportsPage() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{xs:12}}>
               <Stack direction="row" spacing={1}>
                 <Button variant="contained" size="small">اعمال فیلتر</Button>
                 <Button variant="outlined" size="small">پاک کردن</Button>
