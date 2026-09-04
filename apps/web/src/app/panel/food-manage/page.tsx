@@ -106,7 +106,9 @@ export default function FoodManagePage() {
   const [foods, setFoods] = useState(DEMO_FOODS);
   const [places, setPlaces] = useState(DEMO_PLACES);
 
-  const currentFaculty = UNIVERSITIES[selectedUni]?.units[selectedUnit]?.faculties.find(f => f.id === selectedFaculty);
+  const uni: any = UNIVERSITIES[selectedUni];
+  const unit: any = uni?.units[selectedUnit];
+  const currentFaculty = unit?.faculties?.find((f: any) => f.id === selectedFaculty);
   const daySchedule = schedule.filter(s => s.dow === selectedDay);
   const facultyPlaces = places.filter(p => p.faculty === selectedFaculty);
 
